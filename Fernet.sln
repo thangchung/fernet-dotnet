@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28606.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fernet", "src\Fernet\Fernet.csproj", "{DFCDA56E-2054-431E-BF60-2020C3B29098}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FernetTests", "src\FernetTests\FernetTests.csproj", "{8F2ACB53-113B-48F3-8810-B20652573DDC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFCDA56E-2054-431E-BF60-2020C3B29098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFCDA56E-2054-431E-BF60-2020C3B29098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFCDA56E-2054-431E-BF60-2020C3B29098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFCDA56E-2054-431E-BF60-2020C3B29098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2ACB53-113B-48F3-8810-B20652573DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2ACB53-113B-48F3-8810-B20652573DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2ACB53-113B-48F3-8810-B20652573DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2ACB53-113B-48F3-8810-B20652573DDC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6CB750C-1649-42E6-A62D-63A8AF6890E4}
+	EndGlobalSection
+EndGlobal
