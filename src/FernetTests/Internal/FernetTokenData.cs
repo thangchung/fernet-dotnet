@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace FernetTests.Internal
 {
@@ -6,9 +6,10 @@ namespace FernetTests.Internal
     {
         public string Token { get; set; }
         public DateTime Now { get; set; }
-        public int[] Iv { get; set; }
+        public byte[] Iv { get; set; }
         public string Src { get; set; }
         public string Secret { get; set; }
         public int TtlSec { get; set; }
+        public string Desc { get; set; }
     }
 }

@@ -4,4 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Product>fernet-dotnet</Product>
+    <PackageProjectUrl>https://github.com/thangchung/fernet-dotnet</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/thangchung/fernet-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/thangchung/fernet-dotnet</RepositoryUrl>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
 </Project>

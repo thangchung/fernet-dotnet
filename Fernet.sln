@@ -5,7 +5,16 @@ VisualStudioVersion = 16.0.28606.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fernet", "src\Fernet\Fernet.csproj", "{DFCDA56E-2054-431E-BF60-2020C3B29098}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FernetTests", "src\FernetTests\FernetTests.csproj", "{8F2ACB53-113B-48F3-8810-B20652573DDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FernetTests", "src\FernetTests\FernetTests.csproj", "{8F2ACB53-113B-48F3-8810-B20652573DDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{399DBDB1-0D41-45B3-911B-27D036BC9EBD}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		key.snk = key.snk
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
