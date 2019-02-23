@@ -57,11 +57,66 @@ var decoded = decoded64.UrlSafe64Encode().FromBase64String();
 ID4 is an OpenID Connect and OAuth 2.0 Framework for ASP.NET Core. At the moment, it's not supporting Fernet token provider, then the solution for it is wrapping the JWT token inside the fernet token (I'm not sure it is a good solution, but it is a temperary solution working now). See the sample project for it in `samples` folder
 
 - [x] Custom `DefaultTokenCreationService` class to do the fernet encryption.
+
+```csharp
+public class MyTokenCreationService : DefaultTokenCreationService
+{
+    public MyTokenCreationService(ISystemClock clock, IKeyMaterialService keys, ILogger<DefaultTokenCreationService> logger)
+        : base(clock, keys, logger)
+    {
+    }
+
+    protected override async Task<string> CreateJwtAsync(JwtSecurityToken jwt)
+    {
+        var jwtToken = await base.CreateJwtAsync(jwt);
+        var jwt64Token = jwtToken.ToBase64String();
+
+        // this key should store in the KeyVault service, then we can securely access in anywhere
+        var key = "cw_0x689RpI-jtRR7oE8h_eQsKImvJapLeSbXpwF4e4=".UrlSafe64Decode();
+        var fernetToken = SimpleFernet.Encrypt(key, jwt64Token.UrlSafe64Decode());
+
+        return fernetToken;
+    }
+}
+```
+
+In `Startup.cs`
+
+```csharp
+services.AddSingleton<ITokenCreationService, MyTokenCreationService>();
+```
+
 - [x] Write a middleware in `SampleApi` to catch the token before ID4 can get it, and decrypt it to normally JWT token.
+
+```csharp
+app.Use(async (context, next) =>
+{
+    var token = context.Request.Headers["Authorization"].ToString();
+
+    if (!string.IsNullOrEmpty(token))
+    {
+        var fernetToken = token.Substring("bearer".Length + 1, token.Length - "bearer".Length - 1);
+
+        // this key should store in the KeyVault service, then we can securely access in anywhere
+        var key = "cw_0x689RpI-jtRR7oE8h_eQsKImvJapLeSbXpwF4e4=".UrlSafe64Decode();
+        var jwt64Token = SimpleFernet.Decrypt(key, fernetToken, out var timestamp);
+        var jwtToken = jwt64Token.UrlSafe64Encode().FromBase64String();
+
+        // we set it to authorization header, then the internal stack will work normally
+        context.Request.Headers["Authorization"] = $"Bearer {jwtToken}";
+    }
+
+    await next.Invoke();
+});
+```
+
+Run 3 projects: `IdentityServer4`, `SampleApi`, and `ConsoleApp`, you will see as below
 
 ![id4_fernet](artwork/id4_fernet.PNG?raw=true 'id4_fernet')
 
-_Notes_: we're still working on it, so please be care of using it on the production mode. That would be great if you can contact with me to discuss a best solution.
+Look into the `ConsoleApp`, you should see that we can access to `SampleApi` data. Happy hacking!
+
+_Notes_: we're still working on it, so please be care of using it on the production mode. That would be great if you can contact with us to discuss a best solution.
 
 ## Contributing
 
