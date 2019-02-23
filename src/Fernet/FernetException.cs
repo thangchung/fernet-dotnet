@@ -11,7 +11,6 @@ namespace Fernet
         public FernetException(string message, Exception innerException)
             : base(message, innerException)
         {
-            
         }
     }
 }

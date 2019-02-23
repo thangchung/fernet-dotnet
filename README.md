@@ -8,13 +8,22 @@ Authenticated and encrypted API token using modern crypto.
 
 [Fernet](https://github.com/fernet/spec) which takes a user-provided message (an arbitrary sequence of bytes), a key (256 bits), and the current time, and produces a token, which contains the message in a form that can't be read or altered without the key.
 
-## Install
+## Build
 
-Install the library using .NET SDK.
+Build the library using .NET SDK.
 
 ```bash
+$ cd src\Fernet
 $ dotnet restore
-$ dotnet run
+```
+
+## Testing
+
+You can run tests either manually or automatically on every code change.
+
+```bash
+$ cd src\FernetTests
+$ dotnet test
 ```
 
 ## Usage
@@ -43,13 +52,16 @@ var decoded64 = SimpleFernet.Decrypt(key, token, out var timestamp);
 var decoded = decoded64.UrlSafe64Encode().FromBase64String();
 ```
 
-## Testing
+### Integrate with IdentityServer 4 (ID4)
 
-You can run tests either manually or automatically on every code change.
+ID4 is an OpenID Connect and OAuth 2.0 Framework for ASP.NET Core. At the moment, it's not supporting Fernet token provider, then the solution for it is wrapping the JWT token inside the fernet token (I'm not sure it is a good solution, but it is a temperary solution working now). See the sample project for it in `samples` folder
 
-```bash
-$ dotnet test
-```
+- [x] Custom `DefaultTokenCreationService` class to do the fernet encryption.
+- [x] Write a middleware in `SampleApi` to catch the token before ID4 can get it, and decrypt it to normally JWT token.
+
+![id4_fernet](artwork/id4_fernet.PNG?raw=true 'id4_fernet')
+
+_Notes_: we're still working on it, so please be care of using it on the production mode. That would be great if you can contact with me to discuss a best solution.
 
 ## Contributing
 
