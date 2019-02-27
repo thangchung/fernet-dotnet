@@ -6,10 +6,20 @@
 
   <PropertyGroup>
     <Product>fernet-dotnet</Product>
+    <id>Fernet</id>
+    <version>0.0.0</version>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Fernet</AssemblyName>
+    <RootNamespace>Fernet</RootNamespace>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Title>Fernet generates and verifies HMAC-based authentication tokens.</Title>
+    <Description>Fernet which takes a user-provided message (an arbitrary sequence of bytes), a key (256 bits), and the current time, and produces a token, which contains the message in a form that can't be read or altered without the key.</Description>
+    <Authors>Thang Chung</Authors>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/thangchung/fernet-dotnet.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/thangchung/fernet-dotnet</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/thangchung/fernet-dotnet/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/thangchung/fernet-dotnet</RepositoryUrl>
+    <Copyright>Copyright (c) Thang Chung - 2019</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

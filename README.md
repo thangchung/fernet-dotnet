@@ -3,6 +3,8 @@
 Authenticated and encrypted API token using modern crypto.
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Build status](https://ci.appveyor.com/api/projects/status/gltj8y3380xpg17m?svg=true)](https://ci.appveyor.com/project/thangchung/fernet-dotnet)
+[![version](https://img.shields.io/nuget/v/Fernet.svg?label=version)](https://www.nuget.org/packages?q=Fernet)
 
 ## What?
 
