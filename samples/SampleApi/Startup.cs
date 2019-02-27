@@ -1,4 +1,4 @@
-using Fernet;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +12,7 @@ namespace SampleApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         public IConfiguration Configuration { get; }
@@ -20,14 +21,28 @@ namespace SampleApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = "http://localhost:5000";
-                    options.RequireHttpsMetadata = false;
+            services.AddCors(options =>
+                options.AddPolicy("CorsPolicy",
+                    policy => policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()));
 
-                    options.Audience = "api1";
-                });
+            services.AddAuthorization();
+
+            services.AddAuthentication(o => { o.DefaultChallengeScheme = "token"; })
+                .AddIdentityServerAuthentication("token",
+                    o =>
+                    {
+                        o.Authority = "http://localhost:5000";
+                        o.RequireHttpsMetadata = false;
+                    }, o =>
+                    {
+                        o.Authority = "http://localhost:5000";
+                        o.IntrospectionEndpoint = "http://localhost:5000/connect/introspect";
+                        o.ClientId = "api1";
+                        o.ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A";
+                    });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -41,28 +56,8 @@ namespace SampleApi
                 app.UseHsts();
             }
 
-            app.Use(async (context, next) =>
-            {
-                var token = context.Request.Headers["Authorization"].ToString();
-
-                if (!string.IsNullOrEmpty(token))
-                {
-                    var fernetToken = token.Substring("bearer".Length + 1, token.Length - "bearer".Length - 1);
-
-                    // this key should store in the KeyVault service, then we can securely access in anywhere
-                    var key = "cw_0x689RpI-jtRR7oE8h_eQsKImvJapLeSbXpwF4e4=".UrlSafe64Decode();
-                    var jwt64Token = SimpleFernet.Decrypt(key, fernetToken, out var timestamp);
-                    var jwtToken = jwt64Token.UrlSafe64Encode().FromBase64String();
-
-                    // we set it to authorization header, then the internal stack will work normally
-                    context.Request.Headers["Authorization"] = $"Bearer {jwtToken}";
-                }
-
-                await next.Invoke();
-            });
-
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
-            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

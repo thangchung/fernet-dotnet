@@ -6,6 +6,7 @@ using System;
 using IdentityServer4;
 using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
+using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -75,7 +76,10 @@ namespace samples
                     options.ClientSecret = "copy client secret from Google here";
                 });
 
-            services.AddSingleton<ITokenCreationService, MyTokenCreationService>();
+            services.AddTransient<ITokenCreationService, MyTokenCreationService>();
+            services.AddTransient<ITokenValidator, MyTokenValidator>();
+            services.AddTransient<ISecretValidator, MySecretValidator>();
+            services.AddTransient<IIntrospectionRequestValidator, MyIntrospectionRequestValidator>();
         }
 
         public void Configure(IApplicationBuilder app)

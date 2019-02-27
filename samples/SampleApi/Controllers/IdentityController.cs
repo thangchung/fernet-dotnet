@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SampleApi.Controllers
 {   
     [Route("identity")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "token")]
     public class IdentityController : ControllerBase
     {
         public IActionResult Get()
